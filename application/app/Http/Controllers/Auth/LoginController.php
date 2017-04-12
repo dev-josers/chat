@@ -3,29 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use JWTAuth;
+use JWTAuthException;
 
+/**
+ *This controller handles authenticating users for the application.    
+ */
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -34,6 +21,44 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('jwt.auth', ['except' => 'login']);
     }
+
+    /**
+     * Create a new JWTAuth user login
+     *
+     * @return object, header authorization
+     */
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        
+        $token = null;
+        
+        try {
+           if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['message' => 'Validation Failed', 'errors'=> 'Invalid email or password'], Response::HTTP_UNPROCESSABLE_ENTITY);
+           }
+        } catch (JWTAuthException $e) {
+            return response()->json(['message' => 'An error was encountered', 'errors'=> $e], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        
+        return response()->json(['data' => JWTAuth::toUser($token)])->header('Authorization', 'Bearer ' . $token);
+    }
+
+    /**
+     * Logout for JWTAuth User
+     *
+     * @return object
+     */
+    public function logout(Request $request)
+    {
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message' => 'Logout successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error was encountered', 'errors'=> $e], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
