@@ -160,7 +160,7 @@ The current endpoints avaiable are:
 ```
     This endpoint allows a user to create a new message in a chat.
 
-    Endpoint:  [POST] http://localhost:[port]/api/chats/{1}/chat_messages
+    Endpoint:  [POST] http://localhost:[port]/api/chats/{id}/chat_messages
     Request:
         Authorization Token on Header
         id      [required][parameter] number
