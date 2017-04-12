@@ -18,3 +18,9 @@ Route::group(['namespace' => 'User', 'middleware' => 'jwt.auth'], function () {
     Route::get('users/current', 'UserController@read');
     Route::patch('users/current', 'UserController@update');
 });
+
+Route::group(['namespace' => 'Chat', 'middleware' => 'jwt.auth'], function () {
+    Route::post('chats', 'ChatController@store');
+    Route::get('chats', 'ChatController@listChats');
+    Route::patch('chats/{id}', 'ChatController@update');
+});

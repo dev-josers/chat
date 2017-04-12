@@ -31,8 +31,8 @@ The current endpoints avaiable are:
 
     Endpoint:  [POST] http://localhost:[port]/api/auth/login
     Request:
-        email    [required] string
-        password [required] string
+        email    [required][attribute] string
+        password [required][attribute] string
     Response:
         Authorization Token on Header
         Body
@@ -59,10 +59,10 @@ The current endpoints avaiable are:
     Endpoint:  [POST] http://localhost:8000/api/users
     Request:
         Authorization Token on Header
-        name                  [required] string
-        email                 [required] string
-        password              [required] string
-        password_confirmation [required] string
+        name                  [required][attribute] string
+        email                 [required][attribute] string
+        password              [required][attribute] string
+        password_confirmation [required][attribute] string
     Response:       
         Body    
 ```
@@ -88,12 +88,55 @@ The current endpoints avaiable are:
     Endpoint:  [PATCH] http://localhost:[port]/api/users/current
     Request:
         Authorization Token on Header
-        name                  [required] string
-        email                 [required] string
-        password              [required] string
-        password_confirmation [required] string
+        name                  [required][attribute] string
+        email                 [required][attribute] string
+        password              [required][attribute] string
+        password_confirmation [required][attribute] string
     Response:       
         Body
+```
+
+### Chats
+
+- List
+```
+    This endpoint allows a user to view a paginated list of all chats. Each chat have a list of users who have chatted and the last message of the chat.
+
+    Endpoint:  [GET] http://localhost:[port]/api/chats?page=1&limit=50
+    Request:
+        Authorization Token on Header
+        page    [required][parameter] number
+        limit   [required][parameter] number
+    Response:       
+        Body
+
+```
+
+- Create
+```
+    This endpoint allows a user to create a chat and post the first message
+
+    Endpoint:  [POST] http://localhost:[port]/api/chats
+    Request:
+        Authorization Token on Header
+        name    [required][attribute] string
+        message [required][attribute] string
+    Response:       
+        Body
+```
+
+- Update
+```
+    This endpoint allows the user to update a chat that they created. It throws an error if a user tries to update a chat that they have not created.
+
+    Endpoint:  [PATCH] http://localhost:[port]/api/chats/{id}
+    Request:
+        Authorization Token on Header
+        id    [required][parameter] number
+        name  [required][attribute] string
+    Response:       
+        Body
+
 ```
 
 ## Security Vulnerabilities
