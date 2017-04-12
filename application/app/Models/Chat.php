@@ -10,17 +10,33 @@ class Chat extends Model
     protected $fillable = ['name', 'user_id'];
     protected $guarded = ['id'];
 
+    /**
+     * Messages that a chat has
+     *
+     * @return object
+     */
     public function messages() 
     {
         return $this->hasMany('App\Models\ChatMessage');
     }
 
+    /**
+     * User that a chat belongs
+     *
+     * @return object
+     */
     public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    public static function chatsPagination($limit) {
+    /**
+     * Get all chats with pagination
+     *
+     * @return object
+     */
+    public static function chatsPagination($limit)
+    {
         $chats = self::paginate($limit); 
 
         foreach ($chats->items() as &$chat) {
@@ -40,4 +56,5 @@ class Chat extends Model
             'data' => $chats->items()
         );
     }
+
 }

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 
-class ChatForm extends FormRequest
+class ChatMessageForm extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,21 +23,10 @@ class ChatForm extends FormRequest
      * @return array
      */
     public function rules()
-    {        
-        switch($this->method()) {            
-            case 'POST': {
-                return [
-                    "name" => "required|between:1,60",
-                    "message" => "required|between:1,100",
-                ];    
-            }            
-            case 'PATCH': {
-                return [
-                    "name" => "required|between:1,60",
-                ];    
-            }
-            default:break;
-        }        
+    {
+        return [
+            "message" => "required|between:1,1000",
+        ];
     }
 
     /**
@@ -48,8 +37,6 @@ class ChatForm extends FormRequest
     public function messages()
     {
         return [
-            'name.between' => 'The :attribute must be between :min - :max.',
-            'name.required' => 'The :attribute is required!',
             'message.between' => 'The :attribute must be between :min - :max.',
             'message.required' => 'The :attribute is required!',
         ];

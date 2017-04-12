@@ -139,6 +139,36 @@ The current endpoints avaiable are:
 
 ```
 
+### Chat Messages
+
+- List
+```
+    This endpoint allows a user to view a paginated list of chat messages.The order of the message pagination should be DESC by the date they were created.
+
+    Endpoint:  [GET] http://localhost:[port]/api/chats/{id}/chat_messages?page=1&limit=50
+    Request:
+        Authorization Token on Header
+        id      [required][parameter] number
+        page    [required][parameter] number
+        limit   [required][parameter] number
+    Response:
+        Body
+
+```
+
+- Create
+```
+    This endpoint allows a user to create a new message in a chat.
+
+    Endpoint:  [POST] http://localhost:[port]/api/chats/{1}/chat_messages
+    Request:
+        Authorization Token on Header
+        id      [required][parameter] number
+        message [required][attribute] string
+    Response:       
+        Body
+```
+
 ## Security Vulnerabilities
 
 If you discover a security vulnerability, please send an e-mail to José Roldán at dev.josers@gmail.com. All security vulnerabilities will be promptly addressed.

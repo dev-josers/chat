@@ -23,4 +23,6 @@ Route::group(['namespace' => 'Chat', 'middleware' => 'jwt.auth'], function () {
     Route::post('chats', 'ChatController@store');
     Route::get('chats', 'ChatController@listChats');
     Route::patch('chats/{id}', 'ChatController@update');
+    Route::post('chats/{id}/chat_messages', 'ChatMessagesController@store');
+    Route::get('chats/{id}/chat_messages', 'ChatMessagesController@listChatMessages');
 });
